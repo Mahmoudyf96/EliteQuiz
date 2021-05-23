@@ -38,7 +38,7 @@ class ChatVC: MessagesViewController, MessagesDataSource, MessagesLayoutDelegate
             Message(sender: currentUser,
                     messageId: "1",
                     sentDate: Date().addingTimeInterval(-86400),
-                    kind: .)
+                    kind: .text("Hello World!"))
         )
         messages.append(
             Message(sender: chatBot,

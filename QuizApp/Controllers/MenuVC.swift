@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class MenuVC: UIViewController {
 
@@ -14,6 +15,8 @@ class MenuVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        validateAuth()
 
         chatButton.image = UIImage(named: "Chat")?.scaleTo(CGSize(width: 30, height: 30))
         displayButton.image = UIImage(named: "Sun")?.scaleTo(CGSize(width: 30, height: 30))
@@ -21,8 +24,16 @@ class MenuVC: UIViewController {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
-        
-        // Do any additional setup after loading the view.
+    }
+    
+    private func validateAuth() {
+        if FirebaseAuth.Auth.auth().currentUser == nil {
+            performSegue(withIdentifier: "LoginSegue", sender: self)
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     @IBAction func chatPressed(_ sender: UIBarButtonItem) {
@@ -39,16 +50,4 @@ class MenuVC: UIViewController {
 
     
     
-}
-
-// MARK: - Extensions
-
-extension UIImage {
-    func scaleTo(_ newSize: CGSize) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
-        self.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
-        let newImage: UIImage? = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage ?? self
-    }
 }

@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-class QuizManager {
+final class QuizManager {
     
     var quizzes: [Quiz] = []
     
