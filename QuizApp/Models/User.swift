@@ -12,4 +12,10 @@ struct User {
     var emailAddress: String
 //    var profilePicURL: String
     var highScore: Int
+    
+    var safeEmail: String {
+        var safeEmail = emailAddress.replacingOccurrences(of: ".", with: "-")
+        safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
+        return safeEmail
+    }
 }

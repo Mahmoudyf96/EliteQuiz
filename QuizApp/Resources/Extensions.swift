@@ -19,4 +19,8 @@ extension UIImage {
     }
 }
 
+extension Notification.Name {
+    static let didLogInNotification = Notification.Name("didLogInNotification")
+}
+
 

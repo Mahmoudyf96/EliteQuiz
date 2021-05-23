@@ -291,6 +291,7 @@
 				C26E6489265740DE001925FD /* Frameworks */,
 				C26E648A265740DE001925FD /* Resources */,
 				409EB1E00C81CF66CAFA969C /* [CP] Embed Pods Frameworks */,
+				6CE22CC972D2ABD5CDD1D372 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -329,6 +330,7 @@
 				C26E64AD265740E2001925FD /* Frameworks */,
 				C26E64AE265740E2001925FD /* Resources */,
 				29F8A73F7AEAAF80F33DBF89 /* [CP] Embed Pods Frameworks */,
+				206613D592117A5F6628C9E4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -417,6 +419,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		206613D592117A5F6628C9E4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-QuizApp-QuizAppUITests/Pods-QuizApp-QuizAppUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-QuizApp-QuizAppUITests/Pods-QuizApp-QuizAppUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-QuizApp-QuizAppUITests/Pods-QuizApp-QuizAppUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		29F8A73F7AEAAF80F33DBF89 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -493,6 +512,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6CE22CC972D2ABD5CDD1D372 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-QuizApp/Pods-QuizApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-QuizApp/Pods-QuizApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-QuizApp/Pods-QuizApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		738A5F4A51864B08E854BDC9 /* [CP] Check Pods Manifest.lock */ = {

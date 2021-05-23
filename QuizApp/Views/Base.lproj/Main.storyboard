@@ -83,6 +83,15 @@
                                     <action selector="didTapLogin:" destination="G1T-yC-Ian" eventType="touchUpInside" id="zkg-cV-TmV"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2WU-KE-DR4" customClass="GIDSignInButton">
+                                <rect key="frame" x="71" y="497" width="272" height="45"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="272" id="L9D-jw-zvF"/>
+                                    <constraint firstAttribute="height" constant="45" id="uCE-yf-E99"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="sF3-d1-t2J"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -99,11 +108,15 @@
                             <constraint firstItem="1ue-9O-st9" firstAttribute="leading" relation="lessThanOrEqual" secondItem="sF3-d1-t2J" secondAttribute="leading" constant="71" id="cO2-W4-REn"/>
                             <constraint firstItem="sF3-d1-t2J" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="Esx-dS-nLe" secondAttribute="trailing" constant="94" id="cYh-HQ-D08"/>
                             <constraint firstItem="Esx-dS-nLe" firstAttribute="top" secondItem="sF3-d1-t2J" secondAttribute="top" constant="121" id="cZa-Tp-gYm"/>
+                            <constraint firstItem="2WU-KE-DR4" firstAttribute="leading" relation="lessThanOrEqual" secondItem="sF3-d1-t2J" secondAttribute="leading" constant="72" id="cpf-Qx-3g3"/>
                             <constraint firstItem="sF3-d1-t2J" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="eIR-cB-Uxv" secondAttribute="trailing" constant="71" id="dLt-wa-Ac7"/>
                             <constraint firstItem="eIR-cB-Uxv" firstAttribute="leading" relation="lessThanOrEqual" secondItem="sF3-d1-t2J" secondAttribute="leading" constant="71" id="e9d-U7-DsU"/>
                             <constraint firstItem="Fn6-6r-rOv" firstAttribute="top" secondItem="1ue-9O-st9" secondAttribute="bottom" constant="20" id="eLL-8V-40E"/>
+                            <constraint firstItem="2WU-KE-DR4" firstAttribute="centerX" secondItem="5HS-24-DuE" secondAttribute="centerX" id="f7a-Sc-FX6"/>
+                            <constraint firstItem="2WU-KE-DR4" firstAttribute="top" secondItem="zqP-fr-mob" secondAttribute="bottom" constant="15" id="fXb-0R-OkU"/>
                             <constraint firstItem="Fn6-6r-rOv" firstAttribute="leading" relation="lessThanOrEqual" secondItem="sF3-d1-t2J" secondAttribute="leading" constant="71" id="fXe-3q-yxE"/>
                             <constraint firstItem="Esx-dS-nLe" firstAttribute="leading" relation="lessThanOrEqual" secondItem="sF3-d1-t2J" secondAttribute="leading" constant="233" id="jcX-uk-BOX"/>
+                            <constraint firstItem="sF3-d1-t2J" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="2WU-KE-DR4" secondAttribute="trailing" constant="72" id="klX-AM-4ES"/>
                             <constraint firstItem="Esx-dS-nLe" firstAttribute="centerX" secondItem="5HS-24-DuE" secondAttribute="centerX" constant="69.5" id="lC0-5S-MSK"/>
                             <constraint firstItem="1ue-9O-st9" firstAttribute="centerX" secondItem="5HS-24-DuE" secondAttribute="centerX" id="nLA-4w-EJB"/>
                             <constraint firstItem="sF3-d1-t2J" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="zqP-fr-mob" secondAttribute="trailing" constant="71" id="sY2-pW-GGS"/>
@@ -122,6 +135,7 @@
                         <outlet property="emailField" destination="1ue-9O-st9" id="njQ-aO-v10"/>
                         <outlet property="loginPressed" destination="zqP-fr-mob" id="3sC-99-84B"/>
                         <outlet property="passwordField" destination="Fn6-6r-rOv" id="Qju-nb-JDQ"/>
+                        <outlet property="signInButton" destination="2WU-KE-DR4" id="Ice-MK-i7e"/>
                         <segue destination="x3L-k0-OeE" kind="show" identifier="RegisterSegue" id="SJr-ru-o9R"/>
                     </connections>
                 </viewController>
@@ -160,7 +174,7 @@
                                 </constraints>
                                 <state key="normal" image="PlayButton"/>
                                 <connections>
-                                    <action selector="playPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wKX-7Z-J2E"/>
+                                    <action selector="didTapPlay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Rn-uJ-46M"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AeL-p1-Szx">
@@ -206,30 +220,31 @@
                             <inset key="imageInsets" minX="25" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <color key="tintColor" systemColor="labelColor"/>
                             <connections>
-                                <action selector="displayPressed:" destination="BYZ-38-t0r" id="xL6-U9-CCZ"/>
+                                <action selector="didTapSettings:" destination="BYZ-38-t0r" id="rcH-Kc-7J2"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Item" style="plain" id="qL2-9o-Tfx">
                             <inset key="imageInsets" minX="0.0" minY="0.0" maxX="25" maxY="0.0"/>
                             <color key="tintColor" systemColor="labelColor"/>
                             <connections>
-                                <action selector="chatPressed:" destination="BYZ-38-t0r" id="cnZ-s7-NGO"/>
+                                <action selector="didTapChat:" destination="BYZ-38-t0r" id="qAk-gx-xRT"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="chatButton" destination="qL2-9o-Tfx" id="e7j-5s-5eC"/>
-                        <outlet property="displayButton" destination="e6a-2e-yFa" id="nM5-Nm-l9E"/>
+                        <outlet property="settingsButton" destination="e6a-2e-yFa" id="2ip-7d-Lgg"/>
                         <segue destination="bvO-Po-zFM" kind="show" identifier="ChatSegue" id="wYG-px-8wC"/>
                         <segue destination="q8J-JR-jBX" kind="show" identifier="QuizSegue" id="Dt7-qJ-DM1"/>
                         <segue destination="G1T-yC-Ian" kind="show" identifier="LoginSegue" id="6tP-sS-ITP"/>
+                        <segue destination="iES-gg-mvk" kind="show" identifier="ProfileSegue" id="QFc-6G-NuT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1181" y="-539"/>
+            <point key="canvasLocation" x="1179.7101449275362" y="-539.0625"/>
         </scene>
-        <!--ChatVC-->
+        <!--Global Chat-->
         <scene sceneID="3hB-VO-iAT">
             <objects>
                 <viewController id="bvO-Po-zFM" customClass="ChatVC" customModule="QuizApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -239,16 +254,56 @@
                         <viewLayoutGuide key="safeArea" id="WNX-3v-FpJ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="33v-r3-qHy"/>
+                    <navigationItem key="navigationItem" title="Global Chat" id="33v-r3-qHy"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o2H-pq-3HN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1974" y="-539"/>
         </scene>
-        <!--View Controller-->
+        <!--Profile-->
+        <scene sceneID="s0f-Ac-T7b">
+            <objects>
+                <viewController id="iES-gg-mvk" customClass="ProfileVC" customModule="QuizApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="an6-VA-N1q">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gcx-OT-mk6">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="cy8-ri-bOP"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="gcx-OT-mk6" firstAttribute="top" secondItem="cy8-ri-bOP" secondAttribute="top" id="Bht-DR-QLh"/>
+                            <constraint firstItem="cy8-ri-bOP" firstAttribute="bottom" secondItem="gcx-OT-mk6" secondAttribute="bottom" id="PMM-W8-uLB"/>
+                            <constraint firstItem="cy8-ri-bOP" firstAttribute="trailing" secondItem="gcx-OT-mk6" secondAttribute="trailing" id="VIR-SH-aOM"/>
+                            <constraint firstItem="gcx-OT-mk6" firstAttribute="leading" secondItem="cy8-ri-bOP" secondAttribute="leading" id="esM-5E-if4"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Profile" id="6WT-el-0ym">
+                        <barButtonItem key="rightBarButtonItem" title="display" style="plain" id="uSA-5c-WXm">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="didTapDisplayChange:" destination="iES-gg-mvk" id="ucB-Kt-txk"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="displayChangeButton" destination="uSA-5c-WXm" id="23V-p2-ZNM"/>
+                        <outlet property="tableView" destination="gcx-OT-mk6" id="bh3-E0-WL4"/>
+                        <segue destination="G1T-yC-Ian" kind="show" identifier="LogoutSegue" id="SaY-uA-YbS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D3p-kW-Nh1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1180" y="-1279"/>
+        </scene>
+        <!--QuizzesVC-->
         <scene sceneID="Rfr-uv-g8e">
             <objects>
-                <viewController id="q8J-JR-jBX" sceneMemberID="viewController">
+                <viewController id="q8J-JR-jBX" customClass="QuizzesVC" customModule="QuizApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WTZ-Qv-FAF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -282,7 +337,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bQZ-Qv-CTa">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bQZ-Qv-CTa">
                                 <rect key="frame" x="20" y="441.5" width="374" height="57"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -294,11 +349,11 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SaS-Zw-vKJ">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SaS-Zw-vKJ">
                                 <rect key="frame" x="20" y="528.5" width="374" height="57"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="374" id="Ka1-p5-gAa"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="374" id="Ka1-p5-gAa"/>
                                     <constraint firstAttribute="height" constant="57" id="xtX-0x-1gy"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="KoHo-Regular" family="KoHo" pointSize="20"/>
@@ -306,7 +361,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HYX-vw-STH">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HYX-vw-STH">
                                 <rect key="frame" x="20" y="615.5" width="374" height="57"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -347,7 +402,7 @@
                             <constraint firstItem="Z2h-6q-c7m" firstAttribute="leading" secondItem="WTZ-Qv-FAF" secondAttribute="leading" constant="32" id="nxW-1T-mD5"/>
                             <constraint firstItem="SaS-Zw-vKJ" firstAttribute="top" secondItem="bQZ-Qv-CTa" secondAttribute="bottom" constant="30" id="sy5-aa-c2t"/>
                             <constraint firstItem="Z2h-6q-c7m" firstAttribute="top" secondItem="dTU-Th-OKT" secondAttribute="top" constant="35" id="syl-Mz-sC4"/>
-                            <constraint firstItem="dTU-Th-OKT" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="HYX-vw-STH" secondAttribute="bottom" constant="189.5" id="wmB-ld-es3"/>
+                            <constraint firstItem="dTU-Th-OKT" firstAttribute="bottom" secondItem="HYX-vw-STH" secondAttribute="bottom" constant="189.5" id="wmB-ld-es3"/>
                             <constraint firstItem="HYX-vw-STH" firstAttribute="centerX" secondItem="WTZ-Qv-FAF" secondAttribute="centerX" id="wyS-F3-qcT"/>
                             <constraint firstItem="dTU-Th-OKT" firstAttribute="trailing" secondItem="tpj-Tg-0Xc" secondAttribute="trailing" constant="20" id="xtP-D5-G4o"/>
                             <constraint firstItem="dTU-Th-OKT" firstAttribute="trailing" secondItem="HYX-vw-STH" secondAttribute="trailing" constant="20" id="yhg-Bb-Dnr"/>
@@ -364,10 +419,10 @@
             </objects>
             <point key="canvasLocation" x="1974" y="-1279"/>
         </scene>
-        <!--View Controller-->
+        <!--Game OverVC-->
         <scene sceneID="DCU-ta-zrH">
             <objects>
-                <viewController id="F3s-mv-oen" sceneMemberID="viewController">
+                <viewController id="F3s-mv-oen" customClass="GameOverVC" customModule="QuizApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XUU-90-CGR">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -536,7 +591,6 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="didTapLogin:" destination="G1T-yC-Ian" eventType="touchUpInside" id="HbE-14-9S2"/>
                                     <action selector="didTapRegister:" destination="x3L-k0-OeE" eventType="touchUpInside" id="h1D-Kh-Ev2"/>
                                 </connections>
                             </button>
@@ -602,7 +656,6 @@
         <!--Navigation Controller-->
         <scene sceneID="Qlo-JW-0lC">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Edn-wc-nU9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ONZ-s3-M8D" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JIe-Jb-Slp">
@@ -614,10 +667,14 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="94J-e5-LDo"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Edn-wc-nU9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="319" y="-539"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="SaY-uA-YbS"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="Close" width="512" height="512"/>
         <image name="PlayButton" width="512" height="512"/>

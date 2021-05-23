@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import GoogleSignIn
 
 class LoginVC: UIViewController {
     
@@ -14,9 +15,22 @@ class LoginVC: UIViewController {
     @IBOutlet weak var passwordField: UITextField!
     
     @IBOutlet weak var loginPressed: UIButton!
+    @IBOutlet weak var signInButton: GIDSignInButton!
+    
+    private var loginObserver: NSObjectProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        loginObserver = NotificationCenter.default.addObserver(
+            forName: .didLogInNotification,
+            object: nil,
+            queue: .main) { [weak self] _ in
+            
+            guard let strongSelf = self else { return }
+            
+            strongSelf.navigationController?.popToRootViewController(animated: true)
+        }
 
         title = "Log In"
         view.backgroundColor = .white
@@ -34,6 +48,9 @@ class LoginVC: UIViewController {
         emailField.delegate = self
         passwordField.delegate = self
         
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        signInButton.layer.cornerRadius = 5
+        
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
@@ -48,6 +65,12 @@ class LoginVC: UIViewController {
 //                                               selector: #selector(keyboardWillHide(sender:)),
 //                                               name: UIResponder.keyboardWillHideNotification,
 //                                               object: nil)
+    }
+    
+    deinit {
+        if let observer = loginObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
     }
     
 //    @objc func keyboardWillShow(sender: NSNotification) {
@@ -90,6 +113,10 @@ class LoginVC: UIViewController {
             
             strongSelf.navigationController?.popToRootViewController(animated: true)
         }
+    }
+    
+    @IBAction func didTapGoogleSignIn(_ sender: UIButton) {
+        
     }
     
     func alertUserLoginError() {

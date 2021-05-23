@@ -8,16 +8,70 @@
 import UIKit
 import CoreData
 import Firebase
+import GoogleSignIn
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
+        
+        GIDSignIn.sharedInstance()?.clientID = FirebaseApp.app()?.options.clientID
+        GIDSignIn.sharedInstance()?.delegate = self
         return true
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        guard error == nil else {
+            if let error = error {
+                print("Failed to sign in with Google: \(error)")
+            }
+            return
+        }
+        
+        guard let user = user else { return }
+        
+        print("Did sign in with Google: \(user)")
+        
+        guard let email = user.profile.email,
+              let username = user.profile.givenName else {return }
+        
+        DatabaseManager.shared.userExists(with: email, completion: { exits in
+            if !exits {
+                //Insert to database
+                DatabaseManager.shared.createUser(with: User(username: username,
+                                                             emailAddress: email,
+                                                             highScore: 0))
+            }
+        })
+        
+        guard let authentication = user.authentication else {
+            print("Google user authentication missing!")
+            return
+        }
+        
+        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
+                                                       accessToken: authentication.accessToken)
+        
+        FirebaseAuth.Auth.auth().signIn(with: credential) { (authResult, error) in
+            guard authResult != nil, error == nil else {
+                print("Failed to Login with Google")
+                return
+            }
+            
+            print("Successfully signed with Google Account!")
+            NotificationCenter.default.post(name: .didLogInNotification, object: nil)
+        }
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+        print("Google user was disconnected")
+    }
+
+    func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any])
+      -> Bool {
+        return GIDSignIn.sharedInstance().handle(url)
     }
 
     // MARK: UISceneSession Lifecycle

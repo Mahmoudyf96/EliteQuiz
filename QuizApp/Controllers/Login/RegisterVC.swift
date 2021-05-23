@@ -82,7 +82,7 @@ class RegisterVC: UIViewController {
         confirmPassField.resignFirstResponder()
         
         guard let username = usernameField.text, let email = emailField.text, let password = passwordField.text, let confirmPass = confirmPassField.text, !username.isEmpty, !email.isEmpty, !password.isEmpty, !confirmPass.isEmpty, password.count >= 6, password == confirmPass else {
-            alertUserRegisterError()
+            self.alertUserRegisterError()
             return
         }
         
@@ -101,6 +101,7 @@ class RegisterVC: UIViewController {
             
             FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
                 guard authResult != nil, error == nil else {
+                    self?.alertUserRegisterError(message: "Looks like the email address is already in use.")
                     print("Error creating user")
                     return
                 }

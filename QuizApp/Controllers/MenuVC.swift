@@ -11,15 +11,15 @@ import FirebaseAuth
 class MenuVC: UIViewController {
 
     @IBOutlet weak var chatButton: UIBarButtonItem!
-    @IBOutlet weak var displayButton: UIBarButtonItem!
+    @IBOutlet weak var settingsButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         validateAuth()
 
-        chatButton.image = UIImage(named: "Chat")?.scaleTo(CGSize(width: 30, height: 30))
-        displayButton.image = UIImage(named: "Sun")?.scaleTo(CGSize(width: 30, height: 30))
+        chatButton.image = UIImage(named: "Chat")?.scaleTo(CGSize(width: 20, height: 20))
+        settingsButton.image = UIImage(named: "Settings")?.scaleTo(CGSize(width: 20, height: 20))
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -36,18 +36,18 @@ class MenuVC: UIViewController {
         super.viewDidAppear(animated)
     }
     
-    @IBAction func chatPressed(_ sender: UIBarButtonItem) {
+    @IBAction func didTapChat(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "ChatSegue", sender: self)
     }
     
-    @IBAction func displayPressed(_ sender: UIBarButtonItem) {
-        
+    @IBAction func didTapSettings(_ sender: Any) {
+        performSegue(withIdentifier: "ProfileSegue", sender: self)
     }
     
-    @IBAction func playPressed(_ sender: UIButton) {
+    
+    @IBAction func didTapPlay(_ sender: UIButton) {
         
     }
-
     
     
 }
