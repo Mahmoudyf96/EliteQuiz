@@ -10,12 +10,15 @@ import Foundation
 struct User {
     var username: String
     var emailAddress: String
-//    var profilePicURL: String
     var highScore: Int
     
     var safeEmail: String {
         var safeEmail = emailAddress.replacingOccurrences(of: ".", with: "-")
         safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
         return safeEmail
+    }
+    
+    var profilePicFileName: String {
+        return "\(safeEmail)_profile_pic.png"
     }
 }

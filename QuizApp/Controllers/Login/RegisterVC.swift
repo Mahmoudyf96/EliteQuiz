@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import JGProgressHUD
 
 class RegisterVC: UIViewController {
     
@@ -17,6 +18,8 @@ class RegisterVC: UIViewController {
     
     @IBOutlet weak var registerPressed: UIButton!
     @IBOutlet weak var profilePic: UIButton!
+    
+    private let spinner = JGProgressHUD(style: .dark)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,11 +89,18 @@ class RegisterVC: UIViewController {
             return
         }
         
+        spinner.show(in: view)
+        
         //Firebase register
         
         DatabaseManager.shared.userExists(with: email) { [weak self] (exists) in
+            
             guard let strongSelf = self else {
                 return
+            }
+            
+            DispatchQueue.main.async {
+                strongSelf.spinner.dismiss()
             }
             
             guard !exists else {
@@ -100,15 +110,38 @@ class RegisterVC: UIViewController {
             }
             
             FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
+                
                 guard authResult != nil, error == nil else {
                     self?.alertUserRegisterError(message: "Looks like the email address is already in use.")
                     print("Error creating user")
                     return
                 }
                 
-                DatabaseManager.shared.createUser(with: User(username: username,
-                                                             emailAddress: email,
-                                                             highScore: 0))
+                let eliteUser = User(username: username,
+                                     emailAddress: email,
+                                     highScore: 0)
+                
+                DatabaseManager.shared.createUser(with: eliteUser) { success in
+                    if success {
+                        //Upload Image
+                        guard let image = strongSelf.profilePic.imageView?.image,
+                              let data = image.pngData() else {
+                            return
+                        }
+                        
+                        let fileName = eliteUser.profilePicFileName
+                        StorageManager.shared.uploadProfilePic(with: data,
+                                                               fileName: fileName) { (result) in
+                            switch result {
+                            case .success(let downloadURL):
+                                UserDefaults.standard.setValue(downloadURL, forKey: "profilePicURL")
+                                print(downloadURL)
+                            case .failure(let error):
+                                print("Storage manager error: \(error)")
+                            }
+                        }
+                    }
+                }
                 
                 strongSelf.navigationController?.popToRootViewController(animated: true)
             }

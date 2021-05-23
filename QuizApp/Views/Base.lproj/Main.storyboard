@@ -244,7 +244,7 @@
             </objects>
             <point key="canvasLocation" x="1179.7101449275362" y="-539.0625"/>
         </scene>
-        <!--Global Chat-->
+        <!--Global Elite Chat-->
         <scene sceneID="3hB-VO-iAT">
             <objects>
                 <viewController id="bvO-Po-zFM" customClass="ChatVC" customModule="QuizApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -254,7 +254,7 @@
                         <viewLayoutGuide key="safeArea" id="WNX-3v-FpJ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Global Chat" id="33v-r3-qHy"/>
+                    <navigationItem key="navigationItem" title="Global Elite Chat" id="33v-r3-qHy"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o2H-pq-3HN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -284,6 +284,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="6WT-el-0ym">
                         <barButtonItem key="rightBarButtonItem" title="display" style="plain" id="uSA-5c-WXm">
+                            <inset key="imageInsets" minX="0.0" minY="0.0" maxX="25" maxY="0.0"/>
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="didTapDisplayChange:" destination="iES-gg-mvk" id="ucB-Kt-txk"/>

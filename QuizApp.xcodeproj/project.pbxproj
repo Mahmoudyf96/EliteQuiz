@@ -13,6 +13,7 @@
 		C21C50322658484700899066 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C21C50312658484700899066 /* GoogleService-Info.plist */; };
 		C21C50512658748D00899066 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21C50502658748D00899066 /* DatabaseManager.swift */; };
 		C21C50592658792D00899066 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21C50582658792D00899066 /* User.swift */; };
+		C21C50C1265B042A00899066 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21C50C0265B042A00899066 /* StorageManager.swift */; };
 		C26E6490265740DE001925FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26E648F265740DE001925FD /* AppDelegate.swift */; };
 		C26E6492265740DE001925FD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26E6491265740DE001925FD /* SceneDelegate.swift */; };
 		C26E6494265740DE001925FD /* QuizzesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26E6493265740DE001925FD /* QuizzesVC.swift */; };
@@ -69,6 +70,7 @@
 		C21C50312658484700899066 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C21C50502658748D00899066 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		C21C50582658792D00899066 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		C21C50C0265B042A00899066 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		C26E648C265740DE001925FD /* QuizApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C26E648F265740DE001925FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C26E6491265740DE001925FD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				C2A8394C26581665006712C2 /* Extensions.swift */,
 				C26E64CE26574D90001925FD /* QuizManager.swift */,
 				C21C50502658748D00899066 /* DatabaseManager.swift */,
+				C21C50C0265B042A00899066 /* StorageManager.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -563,6 +566,7 @@
 				C21C50512658748D00899066 /* DatabaseManager.swift in Sources */,
 				C2A8394426580614006712C2 /* GameOverVC.swift in Sources */,
 				C26E6494265740DE001925FD /* QuizzesVC.swift in Sources */,
+				C21C50C1265B042A00899066 /* StorageManager.swift in Sources */,
 				C26E6490265740DE001925FD /* AppDelegate.swift in Sources */,
 				C26E64ED26574FE6001925FD /* ChatVC.swift in Sources */,
 				C26E64C626574683001925FD /* Quizzes.swift in Sources */,

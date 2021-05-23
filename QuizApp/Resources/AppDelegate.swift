@@ -35,14 +35,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         print("Did sign in with Google: \(user)")
         
         guard let email = user.profile.email,
-              let username = user.profile.givenName else {return }
+              let username = user.profile.givenName else { return }
         
         DatabaseManager.shared.userExists(with: email, completion: { exits in
             if !exits {
                 //Insert to database
-                DatabaseManager.shared.createUser(with: User(username: username,
-                                                             emailAddress: email,
-                                                             highScore: 0))
+                let eliteUser = User(username: username,
+                                     emailAddress: email,
+                                     highScore: 0)
+                
+                DatabaseManager.shared.createUser(with: eliteUser) { success in
+                    if success {
+                        //Upload image
+                        
+                        if user.profile.hasImage {
+                            guard let url = user.profile.imageURL(withDimension: 200) else {
+                                return
+                            }
+                            
+                            URLSession.shared.dataTask(with: url) { (data, _, _) in
+                                guard let data = data else {
+                                    return
+                                }
+                                
+                                let fileName = eliteUser.profilePicFileName
+                                StorageManager.shared.uploadProfilePic(with: data,
+                                                                       fileName: fileName) { (result) in
+                                    switch result {
+                                    case .success(let downloadURL):
+                                        UserDefaults.standard.setValue(downloadURL, forKey: "profilePicURL")
+                                    case .failure(let error):
+                                        print("Storage manager error: \(error)")
+                                    }
+                                }
+                            }.resume()
+                        }
+                    }
+                }
             }
         })
         

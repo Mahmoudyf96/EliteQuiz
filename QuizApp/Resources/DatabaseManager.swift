@@ -37,11 +37,18 @@ extension DatabaseManager {
     }
     
     ///Insert new user to database
-    public func createUser(with user: User) {
+    public func createUser(with user: User, completion: @escaping (Bool) -> Void) {
         database.child(user.safeEmail).setValue([
             "username": user.username,
             "email": user.safeEmail,
             "highScore": user.highScore
-        ])
+        ]) { error, _ in
+            guard error == nil else {
+                print("Failed to write to database")
+                completion(false)
+                return
+            }
+            completion(true)
+        }
     }
 }

@@ -7,10 +7,13 @@
 
 import UIKit
 import MessageKit
+import JGProgressHUD
 
 struct Sender: SenderType {
+    var photoURL: String
     var senderId: String
     var displayName: String
+    var highScore: Int
 }
 
 struct Message: MessageType {
@@ -20,63 +23,59 @@ struct Message: MessageType {
     var kind: MessageKind
 }
 
-class ChatVC: MessagesViewController, MessagesDataSource, MessagesLayoutDelegate, MessagesDisplayDelegate {
+class ChatVC: MessagesViewController {
+    
+    private let spinner = JGProgressHUD(style: .dark)
  
-    let currentUser = Sender(senderId: "self", displayName: "EliteSub")
-    let chatBot = Sender(senderId: "chatbot", displayName: "ChatBot")
+    let currentUser = Sender(photoURL: "",
+                             senderId: "self",
+                             displayName: "EliteSub",
+                             highScore: 69)
+    
+    let chatBot = Sender(photoURL: "",
+                         senderId: "chatbot",
+                         displayName: "ChatBot",
+                         highScore: 7)
 
-    var messages = [MessageType]()
+    private var messages = [Message]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fetchChat()
+        
+        messages.append(Message(sender: currentUser,
+                               messageId: "1",
+                               sentDate: Date(),
+                               kind: .text("Hello World!")))
+        
+        messages.append(Message(sender: chatBot,
+                               messageId: "2",
+                               sentDate: Date(),
+                               kind: .text("Hey buddy!")))
 
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
-        
-        messages.append(
-            Message(sender: currentUser,
-                    messageId: "1",
-                    sentDate: Date().addingTimeInterval(-86400),
-                    kind: .text("Hello World!"))
-        )
-        messages.append(
-            Message(sender: chatBot,
-                    messageId: "2",
-                    sentDate: Date().addingTimeInterval(-86000),
-                    kind: .text("Hey Sub, how has your day been?"))
-        )
-        messages.append(
-            Message(sender: currentUser,
-                    messageId: "3",
-                    sentDate: Date().addingTimeInterval(-85676),
-                    kind: .text("Not bad! Yours?"))
-        )
-        messages.append(
-            Message(sender: chatBot,
-                    messageId: "4",
-                    sentDate: Date().addingTimeInterval(-85400),
-                    kind: .text("Could be better..."))
-        )
-        messages.append(
-            Message(sender: currentUser,
-                    messageId: "5",
-                    sentDate: Date().addingTimeInterval(-85000),
-                    kind: .text("Yea, That's life >.>"))
-        )
     }
+
+    func fetchChat() {
+        
+    }
+    
+}
+
+extension ChatVC: MessagesDataSource, MessagesLayoutDelegate, MessagesDisplayDelegate {
     
     func currentSender() -> SenderType {
         return currentUser
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
-        return messages[indexPath.section]
+        messages[indexPath.section]
     }
     
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
         return messages.count
     }
-    
-    
 }

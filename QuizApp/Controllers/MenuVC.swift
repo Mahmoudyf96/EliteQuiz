@@ -18,11 +18,17 @@ class MenuVC: UIViewController {
         
         validateAuth()
 
-        chatButton.image = UIImage(named: "Chat")?.scaleTo(CGSize(width: 20, height: 20))
+        chatButton.image = UIImage(named: "Chat")?.scaleTo(CGSize(width: 23, height: 23))
         settingsButton.image = UIImage(named: "Settings")?.scaleTo(CGSize(width: 20, height: 20))
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.layoutIfNeeded()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+        self.navigationController?.navigationBar.shadowImage = nil
         self.navigationController?.navigationBar.layoutIfNeeded()
     }
     
