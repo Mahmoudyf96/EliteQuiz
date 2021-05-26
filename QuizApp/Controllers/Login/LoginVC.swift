@@ -105,7 +105,6 @@ class LoginVC: UIViewController {
         //Firebase Login
         
         FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) { [weak self] (authResult, error) in
-            
             guard let strongSelf = self else {
                 return
             }
@@ -120,14 +119,28 @@ class LoginVC: UIViewController {
             }
             
             let user = result.user
+            
+            let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+            
+            DatabaseManager.shared.getDataFor(path: safeEmail) { (result) in
+                switch result {
+                case .success(let data):
+                    guard let userData = data as? [String: Any],
+                          let username = userData["username"] as? String else {
+                        return
+                    }
+                    UserDefaults.standard.setValue(username, forKey: "name")
+                case .failure(let error):
+                    print("Failed to get data: \(error.localizedDescription)")
+                }
+            }
+            
+            UserDefaults.standard.setValue(email, forKey: "email")
+            
             print("Logged in user: \(user)")
             
             strongSelf.navigationController?.popToRootViewController(animated: true)
         }
-    }
-    
-    @IBAction func didTapGoogleSignIn(_ sender: UIButton) {
-        
     }
     
     func alertUserLoginError() {
@@ -139,7 +152,6 @@ class LoginVC: UIViewController {
                                       handler: nil))
         present(alert, animated: true)
     }
-    
 }
 
 // MARK: - UITextFieldDelegate

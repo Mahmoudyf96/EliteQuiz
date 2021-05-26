@@ -27,10 +27,10 @@ class RegisterVC: UIViewController {
         title = "Create Account"
         view.backgroundColor = .white
         
-        profilePic.layer.masksToBounds = true
         profilePic.layer.cornerRadius = 65
         profilePic.layer.borderWidth = 2
         profilePic.layer.borderColor = UIColor.black.cgColor
+        profilePic.layer.masksToBounds = true
         
         emailField.layer.cornerRadius = 5
         emailField.layer.borderWidth = 1
@@ -135,6 +135,8 @@ class RegisterVC: UIViewController {
                             switch result {
                             case .success(let downloadURL):
                                 UserDefaults.standard.setValue(downloadURL, forKey: "profilePicURL")
+                                UserDefaults.standard.setValue(email, forKey: "email")
+                                UserDefaults.standard.setValue(username, forKey: "name")
                                 print(downloadURL)
                             case .failure(let error):
                                 print("Storage manager error: \(error)")

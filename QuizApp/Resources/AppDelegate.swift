@@ -37,6 +37,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         guard let email = user.profile.email,
               let username = user.profile.givenName else { return }
         
+        UserDefaults.standard.setValue(email, forKey: "email")
+        UserDefaults.standard.setValue(username, forKey: "name")
+
+        
         DatabaseManager.shared.userExists(with: email, completion: { exits in
             if !exits {
                 //Insert to database
