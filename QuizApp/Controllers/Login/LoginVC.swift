@@ -36,15 +36,17 @@ class LoginVC: UIViewController {
         }
 
         title = "Log In"
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         
         emailField.layer.cornerRadius = 5
         emailField.layer.borderWidth = 1
         emailField.layer.borderColor = UIColor.black.cgColor
+        emailField.backgroundColor = .secondarySystemBackground
         
         passwordField.layer.cornerRadius = 5
         passwordField.layer.borderWidth = 1
         passwordField.layer.borderColor = UIColor.black.cgColor
+        passwordField.backgroundColor = .secondarySystemBackground
         
         loginPressed.layer.cornerRadius = 5
         
@@ -130,6 +132,9 @@ class LoginVC: UIViewController {
                         return
                     }
                     UserDefaults.standard.setValue(username, forKey: "name")
+                    if UserDefaults.standard.value(forKey: "\(username)highScore") == nil {
+                        UserDefaults.standard.setValue(0, forKey: "\(username)highScore")
+                    }
                 case .failure(let error):
                     print("Failed to get data: \(error.localizedDescription)")
                 }

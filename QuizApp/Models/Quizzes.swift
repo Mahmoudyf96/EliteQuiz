@@ -7,14 +7,15 @@
 
 import Foundation
 
-class MainResponse: Decodable {
-    var Quizzes: [Quiz]
+class Quizzes: Decodable {
+    var results: [Quiz]
 }
 
 class Quiz: Decodable {
     var category: String
     var type: String
-    var question: Bool
+    var difficulty: String
+    var question: String
     var correct_answer: String
     var incorrect_answers: [String]
 }

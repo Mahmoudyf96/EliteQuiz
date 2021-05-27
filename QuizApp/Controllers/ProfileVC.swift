@@ -8,18 +8,20 @@
 import UIKit
 import FirebaseAuth
 import GoogleSignIn
+import SDWebImage
 
 class ProfileVC: UIViewController {
 
-    @IBOutlet weak var displayChangeButton: UIBarButtonItem!
-    
     @IBOutlet weak var logOutButton: UIButton!
     @IBOutlet weak var profilePic: UIImageView!
+    @IBOutlet weak var highScoreLabel: UILabel!
+    @IBOutlet weak var userHighscore: UILabel!
+    @IBOutlet weak var usernameLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        displayChangeButton.image = UIImage(named: "Sun")?.scaleTo(CGSize(width: 20, height: 20))
+        setProfileInfo()
         
         logOutButton.layer.cornerRadius = 5
         logOutButton.layer.masksToBounds = true
@@ -29,6 +31,21 @@ class ProfileVC: UIViewController {
         profilePic.layer.borderWidth = 2
         profilePic.layer.borderColor = UIColor.black.cgColor
         profilePic.layer.masksToBounds = true
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.layoutIfNeeded()
+    }
+    
+    func setProfileInfo() {
+        guard let username = UserDefaults.standard.value(forKey: "username") as? String,
+              let highScore = UserDefaults.standard.value(forKey: "\(username)highScore") as? Int else {
+            print("Could not fetch Username/HighScore")
+            return
+        }
+        
+        usernameLabel.text = username
+        userHighscore.text = "\(highScore)"
     }
     
     func createProfilePic(imageView: UIImageView) -> UIImageView {
@@ -38,34 +55,17 @@ class ProfileVC: UIViewController {
         let fileName = safeEmail + "_profile_pic.png"
         let filePath = "images/" + fileName
         
-        StorageManager.shared.downloadURL(for: filePath) { [weak self] (result) in
+        StorageManager.shared.downloadURL(for: filePath) { (result) in
             switch result {
             case .success(let url):
                 print("download URL: \(url)")
-                self?.downloadImage(imageView: imageView, url: url)
+                imageView.sd_setImage(with: url, completed: nil)
             case .failure(let error):
                 print("Failed to download url: \(error)")
             }
         }
         
         return imageView
-    }
-    
-    func downloadImage(imageView: UIImageView, url: URL) {
-        URLSession.shared.dataTask(with: url) { (data, _, error) in
-            guard let data = data, error == nil else {
-                return
-            }
-            
-            DispatchQueue.main.async {
-                let image = UIImage(data: data)
-                imageView.image = image
-            }
-        }.resume()
-    }
-    
-    @IBAction func didTapDisplayChange(_ sender: UIBarButtonItem) {
-        
     }
     
     @IBAction func didTapLogOut(_ sender: UIButton) {
@@ -76,6 +76,9 @@ class ProfileVC: UIViewController {
         actionSheet.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { [weak self] _ in
             
             guard let strongSelf = self else { return }
+            
+            UserDefaults.standard.setValue(nil, forKey: "email")
+            UserDefaults.standard.setValue(nil, forKey: "username")
             
             //Google Log out
             GIDSignIn.sharedInstance()?.signOut()

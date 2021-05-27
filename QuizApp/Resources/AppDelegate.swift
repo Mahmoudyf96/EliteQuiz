@@ -38,15 +38,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
               let username = user.profile.givenName else { return }
         
         UserDefaults.standard.setValue(email, forKey: "email")
-        UserDefaults.standard.setValue(username, forKey: "name")
-
+        UserDefaults.standard.setValue(username, forKey: "username")
+        if UserDefaults.standard.value(forKey: "\(username)highScore") == nil {
+            UserDefaults.standard.setValue(0, forKey: "\(username)highScore")
+        }
+        
+        guard let highScore = UserDefaults.standard.value(forKey: "\(username)highScore") as? Int else {
+            return
+        }
         
         DatabaseManager.shared.userExists(with: email, completion: { exits in
             if !exits {
                 //Insert to database
                 let eliteUser = User(username: username,
                                      emailAddress: email,
-                                     highScore: 0)
+                                     highScore: highScore)
                 
                 DatabaseManager.shared.createUser(with: eliteUser) { success in
                     if success {

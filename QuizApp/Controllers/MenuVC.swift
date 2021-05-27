@@ -12,14 +12,17 @@ class MenuVC: UIViewController {
 
     @IBOutlet weak var chatButton: UIBarButtonItem!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
+    @IBOutlet weak var highScoreLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         validateAuth()
+        setupMenu()
 
-        chatButton.image = UIImage(named: "Chat")?.scaleTo(CGSize(width: 23, height: 23))
-        settingsButton.image = UIImage(named: "Settings")?.scaleTo(CGSize(width: 20, height: 20))
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.layoutIfNeeded()
     }
     
     private func validateAuth() {
@@ -28,7 +31,21 @@ class MenuVC: UIViewController {
         }
     }
     
+    private func setupMenu() {
+        chatButton.image = UIImage(named: "Chat")?.scaleTo(CGSize(width: 23, height: 23))
+        settingsButton.image = UIImage(named: "Settings")?.scaleTo(CGSize(width: 20, height: 20))
+        
+        guard let username = UserDefaults.standard.value(forKey: "username") as? String,
+              let highScore = UserDefaults.standard.value(forKey: "\(username)highScore") as? Int else {
+            print("Could not fetch Username/HighScore")
+            return
+        }
+        
+        highScoreLabel.text = "\(highScore)"
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
+        setupMenu()
         super.viewDidAppear(animated)
     }
     
@@ -42,7 +59,7 @@ class MenuVC: UIViewController {
     
     
     @IBAction func didTapPlay(_ sender: UIButton) {
-        
+        performSegue(withIdentifier: "QuizSegue", sender: self)
     }
     
     

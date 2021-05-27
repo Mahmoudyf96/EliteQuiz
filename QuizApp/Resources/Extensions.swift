@@ -23,4 +23,23 @@ extension Notification.Name {
     static let didLogInNotification = Notification.Name("didLogInNotification")
 }
 
+extension String {
+    func htmlToUtf8() -> String {
+        let encodedData = self.data(using: .utf8)
+        let attributedOptions: [NSAttributedString.DocumentReadingOptionKey: Any] = [
+            .documentType: NSAttributedString.DocumentType.html,
+            .characterEncoding: String.Encoding.utf8.rawValue
+        ]
+        
+        do {
+            let attributedString = try NSAttributedString(data: encodedData!, options: attributedOptions, documentAttributes: nil)
+            let decodedString = attributedString.string
+            return decodedString
+        } catch {
+            // error...
+        }
+        
+        return String()
+    }
+}
 

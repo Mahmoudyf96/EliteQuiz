@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseDatabase
+import MessageKit
 
 final class DatabaseManager {
     
@@ -28,11 +29,10 @@ extension DatabaseManager {
     public func userExists(with email: String,
                            completion: @escaping ((Bool) -> Void)) {
         
-        var safeEmail = email.replacingOccurrences(of: ".", with: "-")
-        safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
         
         database.child(safeEmail).observeSingleEvent(of: .value) { (dataSnapshot) in
-            guard (dataSnapshot.value as? String) != nil else {
+            guard dataSnapshot.value as? [String: Any] != nil else {
                 completion(false)
                 return
             }
@@ -47,30 +47,19 @@ extension DatabaseManager {
             "username": user.username,
             "email": user.safeEmail,
             "highScore": user.highScore
-        ]) { error, _ in
+        ]) { [weak self] error, _ in
+            
+            guard let strongSelf = self else {
+                return
+            }
+            
             guard error == nil else {
                 print("Failed to write to database")
                 completion(false)
                 return
             }
             
-            /* Creating a users database with all users
-             
-             users => [
-                [
-                    "name":
-                    "safe_email":
-                    "highScore":
-                ],
-                [
-                    "name":
-                    "safe_email":
-                    "highScore":
-                ]
-             ]
-             */
-            
-            self.database.child("users").observeSingleEvent(of: .value) { (dataSnapshot) in
+            strongSelf.database.child("users").observeSingleEvent(of: .value) { (dataSnapshot) in
                 if var usersCollection = dataSnapshot.value as? [[String: Any]] {
                     //Append to users dictionary
                     let newElement = [
@@ -81,7 +70,7 @@ extension DatabaseManager {
                     
                     usersCollection.append(newElement)
                     
-                    self.database.child("users").setValue(usersCollection) { (error, _) in
+                    strongSelf.database.child("users").setValue(usersCollection) { (error, _) in
                         guard error == nil else {
                             completion(false)
                             return
@@ -98,7 +87,7 @@ extension DatabaseManager {
                         ]
                     ]
                     
-                    self.database.child("users").setValue(newCollection) { (error, _) in
+                    strongSelf.database.child("users").setValue(newCollection) { (error, _) in
                         guard error == nil else {
                             completion(false)
                             return
@@ -220,6 +209,35 @@ extension DatabaseManager {
                     return nil
                 }
                 
+                var kind: MessageKind?
+                if type == "photo" {
+                    guard let imageURL = URL(string: content),
+                          let placeHolder = UIImage(systemName: "paperclip") else {
+                        return nil
+                    }
+                    let media = Media(url: imageURL,
+                                      image: nil,
+                                      placeholderImage: placeHolder,
+                                      size: CGSize(width: 300, height: 300))
+                    kind = .photo(media)
+                    
+                } else if type == "video" {
+                    guard let videoURL = URL(string: content),
+                          let placeHolder = UIImage(named: "Placeholder") else {
+                        return nil
+                    }
+                    let media = Media(url: videoURL,
+                                      image: nil,
+                                      placeholderImage: placeHolder,
+                                      size: CGSize(width: 300, height: 300))
+                    kind = .video(media)
+                } else {
+                    kind = .text(content)
+                }
+                guard let finalKind = kind else {
+                    return nil
+                }
+                
                 let senderObject = Sender(photoURL: "",
                                           senderId: senderEmail,
                                           displayName: name,
@@ -228,7 +246,7 @@ extension DatabaseManager {
                 return Message(sender: senderObject,
                                messageId: messageId,
                                sentDate: date,
-                               kind: .text(content))
+                               kind: finalKind)
             }
             
             completion(.success(messages))
@@ -260,9 +278,15 @@ extension DatabaseManager {
                 message = messageText
             case .attributedText(_):
                 break
-            case .photo(_):
+            case .photo(let mediaItem):
+                if let mediaURL = mediaItem.url?.absoluteString {
+                    message = mediaURL
+                }
                 break
-            case .video(_):
+            case .video(let mediaItem):
+                if let mediaURL = mediaItem.url?.absoluteString {
+                    message = mediaURL
+                }
                 break
             case .location(_):
                 break
@@ -388,7 +412,7 @@ extension DatabaseManager {
             self?.database.child("\(otherUserEmail)/conversations").observeSingleEvent(of: .value) { [weak self] (dataSnapshot) in
                 if var conversations = dataSnapshot.value as? [[String: Any]] {
                     conversations.append(recipientConversationData)
-                    self?.database.child("\(otherUserEmail)/conversations").setValue(conversationId)
+                    self?.database.child("\(otherUserEmail)/conversations").setValue(conversations)
                 } else {
                     self?.database.child("\(otherUserEmail)/conversations").setValue([recipientConversationData])
                 }
@@ -557,6 +581,26 @@ extension DatabaseManager {
                     return nil
                 }
                 
+                var kind: MessageKind?
+                if type == "photo" {
+                    guard let imageURL = URL(string: content),
+                          let placeHolder = UIImage(systemName: "paperclip") else {
+                        return nil
+                    }
+                    let media = Media(url: imageURL,
+                                      image: nil,
+                                      placeholderImage: placeHolder,
+                                      size: CGSize(width: 300, height: 300))
+                    kind = .photo(media)
+                    
+                } else {
+                    kind = .text(content)
+                }
+                guard let finalKind = kind else {
+                    return nil
+                }
+                
+                
                 let senderObject = Sender(photoURL: "",
                                           senderId: senderEmail,
                                           displayName: name,
@@ -565,7 +609,7 @@ extension DatabaseManager {
                 return Message(sender: senderObject,
                                messageId: messageId,
                                sentDate: date,
-                               kind: .text(content))
+                               kind: finalKind)
             }
             
             completion(.success(messages))

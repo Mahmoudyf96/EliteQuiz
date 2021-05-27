@@ -25,7 +25,7 @@ class RegisterVC: UIViewController {
         super.viewDidLoad()
         
         title = "Create Account"
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         
         profilePic.layer.cornerRadius = 65
         profilePic.layer.borderWidth = 2
@@ -35,18 +35,22 @@ class RegisterVC: UIViewController {
         emailField.layer.cornerRadius = 5
         emailField.layer.borderWidth = 1
         emailField.layer.borderColor = UIColor.black.cgColor
+        emailField.backgroundColor = .secondarySystemBackground
         
         passwordField.layer.cornerRadius = 5
         passwordField.layer.borderWidth = 1
         passwordField.layer.borderColor = UIColor.black.cgColor
+        passwordField.backgroundColor = .secondarySystemBackground
         
         usernameField.layer.cornerRadius = 5
         usernameField.layer.borderWidth = 1
         usernameField.layer.borderColor = UIColor.black.cgColor
+        usernameField.backgroundColor = .secondarySystemBackground
         
         confirmPassField.layer.cornerRadius = 5
         confirmPassField.layer.borderWidth = 1
         confirmPassField.layer.borderColor = UIColor.black.cgColor
+        confirmPassField.backgroundColor = .secondarySystemBackground
         
         registerPressed.layer.cornerRadius = 5
         
@@ -54,6 +58,10 @@ class RegisterVC: UIViewController {
         emailField.delegate = self
         passwordField.delegate = self
         confirmPassField.delegate = self
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.layoutIfNeeded()
         
         //        NotificationCenter.default.addObserver(self,
         //                                               selector: #selector(keyboardWillShow(sender:)),
@@ -117,6 +125,10 @@ class RegisterVC: UIViewController {
                     return
                 }
                 
+                UserDefaults.standard.setValue(email, forKey: "email")
+                UserDefaults.standard.setValue(username, forKey: "username")
+                UserDefaults.standard.setValue(0, forKey: "\(username)highScore")
+                
                 let eliteUser = User(username: username,
                                      emailAddress: email,
                                      highScore: 0)
@@ -135,8 +147,6 @@ class RegisterVC: UIViewController {
                             switch result {
                             case .success(let downloadURL):
                                 UserDefaults.standard.setValue(downloadURL, forKey: "profilePicURL")
-                                UserDefaults.standard.setValue(email, forKey: "email")
-                                UserDefaults.standard.setValue(username, forKey: "name")
                                 print(downloadURL)
                             case .failure(let error):
                                 print("Storage manager error: \(error)")
