@@ -32,7 +32,7 @@ class MenuVC: UIViewController {
     }
     
     private func setupMenu() {
-        chatButton.image = UIImage(named: "Chat")?.scaleTo(CGSize(width: 23, height: 23))
+        chatButton.image = UIImage(named: "ChatIcon")?.scaleTo(CGSize(width: 23, height: 23))
         settingsButton.image = UIImage(named: "Settings")?.scaleTo(CGSize(width: 20, height: 20))
         
         guard let username = UserDefaults.standard.value(forKey: "username") as? String,
